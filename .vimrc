@@ -1,5 +1,4 @@
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+ autocmd StdinReadPre * let s:std_in=1
 
 " Open nerdtree with shortcut
 map <C-e> :NERDTreeToggle<CR>
@@ -22,6 +21,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug '~/.fzf'
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -102,4 +102,7 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-let g:fzf_layout = { 'down': '~40%' }
+let g:fzf_layout = { 'down': '~60%' }
+
+nmap <c-p> :Files<CR>
+nmap <Leader>p :Tags<CR>
