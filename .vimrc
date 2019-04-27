@@ -1,4 +1,6 @@
- autocmd StdinReadPre * let s:std_in=1
+ " autocmd StdinReadPre * let s:std_in=1
+set hidden
+set hid
 
 " Open nerdtree with shortcut
 map <C-e> :NERDTreeToggle<CR>
@@ -22,6 +24,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug '~/.fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'mileszs/ack.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
@@ -41,11 +46,6 @@ set smartindent
 " Remove trailing whitespace when saving.
 autocmd BufWritePre * %s/\s\+$//e
 
-" Attempt to enable clipboard; didn't really work out because desktop env
-" isn't helping.
-set clipboard=unnamed
-set mouse=v
-
 " Set numbers in the gutter.
 set number
 
@@ -53,23 +53,6 @@ colorscheme mustang
 
 " Set leader key.
 let mapleader = "\<Space>"
-
-" Quickly switch between tabs
-noremap <leader>1 1gt
-noremap <leader>2 2gt
-noremap <leader>3 3gt
-noremap <leader>4 4gt
-noremap <leader>5 5gt
-noremap <leader>6 6gt
-noremap <leader>7 7gt
-noremap <leader>8 8gt
-noremap <leader>9 9gt
-noremap <leader>0 :tablast<cr>
-
-" Go to last active tab.
-au TabLeave * let g:lasttab = tabpagenr()
-nnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
-vnoremap <silent> <c-l> :exe "tabn ".g:lasttab<cr>
 
 " Set line length marker
 set colorcolumn=80
@@ -106,3 +89,17 @@ let g:fzf_layout = { 'down': '~60%' }
 
 nmap <c-p> :Files<CR>
 nmap <Leader>p :Tags<CR>
+
+let g:airline_theme='lucius'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+" Settings for using buffers
+map gn :bn<cr>
+map gp :bp<cr>
+nmap <leader>b :Buffers<CR>
+" nmap <leader>T :enew<cr>
+" nmap <leader>l :bnext<CR>
+" nmap <leader>h :bprevious<CR>
+" nmap <leader>bq :bp <BAR> bd #<CR>
+" nmap <leader>bl :ls<CR>
