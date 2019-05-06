@@ -100,3 +100,14 @@ map gn :bn<cr>
 map gp :bp<cr>
 map gd :bd<cr>
 nmap <leader>b :Buffers<CR>
+
+" Auto center when moving up or down.
+" :nnoremap j jzz
+" :nnoremap k kzz
+
+" Scroll when near top or bottom of screen
+set scrolloff=12
+
+" Enable faster line movement
+:nnoremap <c-j> 5j
+:nnoremap <c-k> 5k
