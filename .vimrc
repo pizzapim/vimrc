@@ -1,15 +1,18 @@
- " autocmd StdinReadPre * let s:std_in=1
+" autocmd StdinReadPre * let s:std_in=1
 set hidden
 set hid
+
+" Disable any keybindings using esc
+set noesckeys
 
 " Open nerdtree with shortcut
 map <C-e> :NERDTreeToggle<CR>
 
 " Download plug.vim if it is not installed
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+ silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+   \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+ autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -28,10 +31,24 @@ Plug 'mileszs/ack.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'elixir-editors/vim-elixir'
+Plug 'justinmk/vim-sneak'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'benmills/vimux'
 
 call plug#end()
 
 let g:ale_lint_on_text_changed = 'never'
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '!!'
+let g:ale_sign_warning = '??'
+
+let g:ale_linters = {}
+let g:ale_linters.elixir = ['elixir-ls']
+
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+let g:ale_fixers.elixir = ['mix_format']
+
+let g:ale_elixir_elixir_ls_release = '/home/pizzapim/apps/elixir-ls/rel'
 
 " Set softtabs and length.
 set expandtab
@@ -54,6 +71,8 @@ colorscheme mustang
 
 " Set leader key.
 let mapleader = "\<Space>"
+map <Leader>vp :VimuxPromptCommand<CR>
+map <Leader>vl :VimuxRunLastCommand<CR>
 
 " Set line length marker
 set colorcolumn=80
@@ -73,18 +92,18 @@ noremap <Right> <Nop>
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+ \ 'bg':      ['bg', 'Normal'],
+ \ 'hl':      ['fg', 'Comment'],
+ \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+ \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+ \ 'hl+':     ['fg', 'Statement'],
+ \ 'info':    ['fg', 'PreProc'],
+ \ 'border':  ['fg', 'Ignore'],
+ \ 'prompt':  ['fg', 'Conditional'],
+ \ 'pointer': ['fg', 'Exception'],
+ \ 'marker':  ['fg', 'Keyword'],
+ \ 'spinner': ['fg', 'Label'],
+ \ 'header':  ['fg', 'Comment'] }
 
 let g:fzf_layout = { 'down': '~60%' }
 
@@ -94,6 +113,7 @@ nmap <Leader>p :Tags<CR>
 let g:airline_theme='lucius'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_tabs = 0
 
 " Settings for using buffers
 map gn :bn<cr>
@@ -101,13 +121,7 @@ map gp :bp<cr>
 map gd :bd<cr>
 nmap <leader>b :Buffers<CR>
 
-" Auto center when moving up or down.
-" :nnoremap j jzz
-" :nnoremap k kzz
-
 " Scroll when near top or bottom of screen
 set scrolloff=12
 
-" Enable faster line movement
-:nnoremap <c-j> 5j
-:nnoremap <c-k> 5k
+autocmd! bufreadpost *.md set syntax=off
