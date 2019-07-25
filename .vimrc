@@ -34,6 +34,7 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'justinmk/vim-sneak'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'benmills/vimux'
+Plug 'mhinz/vim-mix-format'
 
 call plug#end()
 
@@ -43,12 +44,15 @@ let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '??'
 
 let g:ale_linters = {}
-let g:ale_linters.elixir = ['elixir-ls']
+" let g:ale_linters.elixir = ['elixir-ls']
 
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
-let g:ale_fixers.elixir = ['mix_format']
+" let g:ale_fixers.elixir = ['mix_format']
 
-let g:ale_elixir_elixir_ls_release = '/home/pizzapim/apps/elixir-ls/rel'
+" let g:ale_elixir_elixir_ls_release = '/home/pizzapim/apps/elixir-ls/rel'
+
+" Format elixir on save.
+let g:mix_format_on_save = 1
 
 " Set softtabs and length.
 set expandtab
@@ -125,3 +129,8 @@ nmap <leader>b :Buffers<CR>
 set scrolloff=12
 
 autocmd! bufreadpost *.md set syntax=off
+
+if v:version >= 700
+  au BufLeave * let b:winview = winsaveview()
+  au BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+endif
