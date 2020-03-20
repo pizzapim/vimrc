@@ -21,7 +21,6 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'w0rp/ale'
-Plug 'thaerkh/vim-indentguides'
 Plug 'croaker/mustang-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-scripts/grep.vim'
@@ -38,6 +37,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'benmills/vimux'
 Plug 'nvie/vim-flake8'
 Plug 'mhinz/vim-mix-format'
+Plug 'udalov/kotlin-vim'
+Plug 'Yggdroot/indentLine'
 
 call plug#end()
 
@@ -99,8 +100,8 @@ set colorcolumn=80
 set tags=.git/tags
 
 " Indent guide settings
-let g:indentguides_spacechar = '│'
-let g:indentguides_toggleListMode = 0
+" let g:indentguides_spacechar = '│'
+" let g:indentguides_toggleListMode = 0
 
 " Disable arrow buttons
 noremap <Up> <Nop>
@@ -156,3 +157,11 @@ if v:version >= 700
 endif
 
 nnoremap <Leader>a :Ack!<Space>
+
+" Ruby fixes
+let g:ruby_path = system('$HOME/.asdf/shims')
+set regexpengine=1
+
+let g:indentLine_setConceal = 2
+let g:indentLine_concealcursor = ""
+let g:indentLine_char = "┊"
